@@ -21,6 +21,8 @@ export class AppComponent implements OnInit {
   icon: string;
   iconUrl: string;
 
+  ifDate: number;
+
   public result = new Array();
 
   constructor(private weather: WeatherService) {}
@@ -33,6 +35,7 @@ export class AppComponent implements OnInit {
 
   fetchWeatherData() {
     console.log();
+    this.ifDate = 0;
     this.weather.getWeatherData(this.city).subscribe(
       d => {
         //console.log(this.detail);
@@ -49,6 +52,7 @@ export class AppComponent implements OnInit {
         this.wind = obj.list[0].wind.speed;
         this.result = [];
         let p = this.date;
+        this.ifDate = 1;
         this.result.push(obj.list[0]);
         for (let index = 1; index < 40; index++) {
           let q = obj.list[index].dt_txt.split(' ')[0];
@@ -59,6 +63,7 @@ export class AppComponent implements OnInit {
         }
       },
       error => {
+        this.ifDate = 2;
         console.log(error);
       }
     );
